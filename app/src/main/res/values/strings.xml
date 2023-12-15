@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Android Update Assistant</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="main_fragment_label">Update Assistant</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="security_card">Security Patch</string>
+</resources>
