@@ -6,5 +6,11 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="security_card">Security Patch</string>
+    <string name="security_card">Android Security Update</string>
+    <string name="google_play_update_card">Google Play System Update</string>
+
+    <string name="android_version">Android</string>
+    <string name="android_version_toast">"Android Version</string>
+    <string name="not_available">Not available…</string>
+    <string name="update_date">Date updated</string>
 </resources>
