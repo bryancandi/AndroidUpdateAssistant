@@ -11,6 +11,7 @@
 
     <string name="android_version">Android</string>
     <string name="android_version_toast">"Android Version</string>
+    <string name="android_api_level">API Level</string>
     <string name="not_available">Not available…</string>
     <string name="update_date">Date updated</string>
 </resources>

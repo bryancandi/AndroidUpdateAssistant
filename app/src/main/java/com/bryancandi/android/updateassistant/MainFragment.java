@@ -27,6 +27,7 @@ public class MainFragment extends Fragment {
     CardView versionCard;
     CardView securityCard;
     TextView version;
+    TextView apiLevel;
     TextView securityUpdate;
 
     private FragmentMainBinding binding;
@@ -46,13 +47,15 @@ public class MainFragment extends Fragment {
 
         version = view.findViewById(R.id.versionTV);
         version.setText(getString(R.string.android_version) + " " + androidVersion());
+        apiLevel = view.findViewById(R.id.apiLevelTV);
+        apiLevel.setText(getString(R.string.android_api_level) + " " + androidAPILevel());
         securityUpdate = view.findViewById(R.id.securityUpdateTV);
         securityUpdate.setText(securityUpdate());
 
         versionCard = view.findViewById(R.id.version_card_view);
         versionCard.setOnClickListener(v -> {
             Toast.makeText(getActivity(), R.string.android_version_toast,
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
         });
 
         securityCard = view.findViewById(R.id.security_card_view);
@@ -72,6 +75,10 @@ public class MainFragment extends Fragment {
 
     private String androidVersion() {
         return Build.VERSION.RELEASE;
+    }
+
+    private String androidAPILevel() {
+        return String.valueOf(Build.VERSION.SDK_INT);
     }
 
     private String securityUpdate() {

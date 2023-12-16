@@ -35,6 +35,13 @@
                     android:text="@string/android_version"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
+                <TextView
+                    android:id="@+id/apiLevelTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/android_api_level"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
