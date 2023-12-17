@@ -1,17 +1,22 @@
 <resources>
-    <string name="app_name">Android Update Assistant</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Update Assistant</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_refresh_toast">Refreshed</string>
+    <string name="action_exit">Exit</string>
+
     <!-- Strings used for fragments for navigation -->
-    <string name="main_fragment_label">Update Assistant</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="main_fragment_label">Android Updates</string>
 
     <string name="security_card">Android Security Update</string>
     <string name="google_play_update_card">Google Play System Update</string>
+    <string name="google_play_services_card">Google Play Services</string>
+    <string name="google_play_store_card">Google Play Store</string>
 
     <string name="android_version">Android</string>
     <string name="android_version_toast">"Android Version</string>
     <string name="android_api_level">API Level</string>
-    <string name="not_available">Not available…</string>
+    <string name="android_build_number">Build Number</string>
+    <string name="not_available">Not available</string>
     <string name="update_date">Date updated</string>
+    <string name="version">Version</string>
 </resources>
