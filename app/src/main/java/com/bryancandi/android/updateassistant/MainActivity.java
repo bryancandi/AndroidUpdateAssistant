@@ -1,5 +1,7 @@
 package com.bryancandi.android.updateassistant;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
             recreate();
             Toast.makeText(getApplicationContext(), getString(R.string.action_refresh_toast),
                     Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (id == R.id.action_apps) {
+            Intent playStoreLink = new Intent(android.content.Intent.ACTION_VIEW);
+            playStoreLink.setData(Uri.parse("https://play.google.com/store/apps/dev?id=7204662745320573588"));
+            startActivity(playStoreLink);
             return true;
         }
         if (id == R.id.action_exit) {
