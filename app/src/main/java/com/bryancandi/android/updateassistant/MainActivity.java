@@ -3,6 +3,8 @@ package com.bryancandi.android.updateassistant;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bryancandi.android.updateassistant.databinding.ActivityMainBinding;
 
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,21 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+
+            Toast.makeText(getApplicationContext(), getString(R.string.action_refresh_toast),
+                    Toast.LENGTH_SHORT).show();
+            final Handler rHandler1 = new Handler(Looper.getMainLooper());
+            rHandler1.postDelayed(() -> {
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }, 200);
+            final Handler rHandler2 = new Handler(Looper.getMainLooper());
+            rHandler2.postDelayed(this::recreate, 400);
+        });
     }
 
     @Override
@@ -51,11 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
-            recreate();
             Toast.makeText(getApplicationContext(), getString(R.string.action_refresh_toast),
                     Toast.LENGTH_SHORT).show();
+            recreate();
             return true;
         }
+
         if (id == R.id.action_apps) {
             Intent playStoreLink = new Intent(android.content.Intent.ACTION_VIEW);
             playStoreLink.setData(Uri.parse("https://play.google.com/store/apps/dev?id=7204662745320573588"));
@@ -76,4 +96,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }
