@@ -17,11 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidUpdateAssistant"
-        tools:targetApi="31">
+        android:enableOnBackInvokedCallback="true"
+        tools:ignore="UnusedAttribute">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.AndroidUpdateAssistant">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

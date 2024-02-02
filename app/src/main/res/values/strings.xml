@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android Update Assistant</string>
+    <string name="app_name">Update Assistant</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_refresh_toast">Refreshed</string>
     <string name="action_apps">Other Apps</string>
