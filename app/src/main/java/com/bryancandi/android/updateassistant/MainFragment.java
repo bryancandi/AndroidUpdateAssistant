@@ -14,18 +14,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 import com.bryancandi.android.updateassistant.databinding.FragmentMainBinding;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
+import java.util.Locale;
 
 public class MainFragment extends Fragment {
 
@@ -48,7 +47,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
         binding = FragmentMainBinding.inflate(inflater, container, false);
@@ -60,9 +59,9 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         version = view.findViewById(R.id.versionTV);
-        version.setText(getString(R.string.android_version) + " " + androidVersion());
+        version.setText(getString(R.string.android_version, androidVersion()));
         apiLevel = view.findViewById(R.id.apiLevelTV);
-        apiLevel.setText(getString(R.string.android_api_level) + " " + androidAPILevel());
+        apiLevel.setText(getString(R.string.android_api_level, androidAPILevel()));
         buildNumber = view.findViewById(R.id.buildNumberTV);
         buildNumber.setText(buildNumber());
         securityUpdate = view.findViewById(R.id.securityUpdateTV);
@@ -79,16 +78,15 @@ public class MainFragment extends Fragment {
         playStoreUpdated.setText(playStoreUpdated());
 
         versionCard = view.findViewById(R.id.version_card_view);
-        versionCard.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), R.string.android_version_toast,
-                    Toast.LENGTH_SHORT).show();
-        });
+        versionCard.setOnClickListener(v -> Toast.makeText(getActivity(), R.string.android_version_toast,
+                Toast.LENGTH_SHORT).show());
 
         securityCard = view.findViewById(R.id.security_card_view);
         securityCard.setOnClickListener(v -> {
             try {
                 Intent intent = new Intent("com.google.android.gms.update.SystemUpdateActivity");
                 intent.setClassName("com.google.android.gms", "com.google.android.gms.update.SystemUpdateActivity");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -102,6 +100,7 @@ public class MainFragment extends Fragment {
             try {
                 Intent intent = new Intent("com.google.android.finsky.systemupdateactivity.SystemUpdateActivity");
                 intent.setClassName("com.android.vending", "com.google.android.finsky.systemupdateactivity.SystemUpdateActivity");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -115,6 +114,7 @@ public class MainFragment extends Fragment {
                 String url = "https://play.google.com/store/apps/details?id=com.google.android.gms";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
         });
 
@@ -123,6 +123,7 @@ public class MainFragment extends Fragment {
             try {
                 Intent intent = new Intent("com.google.android.finsky.activities.MainActivity");
                 intent.setClassName("com.android.vending", "com.google.android.finsky.activities.MainActivity");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -157,7 +158,7 @@ public class MainFragment extends Fragment {
 
     private String securityUpdate() {
         String patchDate = Build.VERSION.SECURITY_PATCH;
-        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Date newPatchDate = null;
         try {
             newPatchDate = spf.parse(patchDate);
@@ -175,7 +176,7 @@ public class MainFragment extends Fragment {
     }
 
     private String gPlayUpdate() {
-        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Date newPatchDate = null;
         try {
             String patchDate = requireActivity().getPackageManager().getPackageInfo("com.google.android.modulemetadata", 0).versionName;
@@ -203,7 +204,7 @@ public class MainFragment extends Fragment {
     }
 
     private String gmsUpdated() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy HH:mm z");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy HH:mm z", Locale.US);
         try {
             long lastUpdate = requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0 ).lastUpdateTime;
             return dateFormat.format( new Date( lastUpdate ) );
@@ -223,7 +224,7 @@ public class MainFragment extends Fragment {
     }
 
     private String playStoreUpdated() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy HH:mm z");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy HH:mm z", Locale.US);
         try {
             long v = requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_STORE_PACKAGE, 0).lastUpdateTime;
             return dateFormat.format( new Date( v ) );

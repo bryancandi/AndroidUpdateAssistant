@@ -13,9 +13,9 @@
     <string name="google_play_services_card">Google Play Services</string>
     <string name="google_play_store_card">Google Play Store</string>
 
-    <string name="android_version">Android</string>
+    <string name="android_version">Android %1$s</string>
     <string name="android_version_toast">"Android Version</string>
-    <string name="android_api_level">API Level</string>
+    <string name="android_api_level">API Level %1$s</string>
     <string name="android_build_number">Build Number</string>
     <string name="not_available">Not available</string>
     <string name="update_date">Date updated</string>
