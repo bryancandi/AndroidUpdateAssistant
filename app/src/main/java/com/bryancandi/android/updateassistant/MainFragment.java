@@ -86,7 +86,7 @@ public class MainFragment extends Fragment {
             try {
                 Intent intent = new Intent("com.google.android.gms.update.SystemUpdateActivity");
                 intent.setClassName("com.google.android.gms", "com.google.android.gms.update.SystemUpdateActivity");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,7 +100,7 @@ public class MainFragment extends Fragment {
             try {
                 Intent intent = new Intent("com.google.android.finsky.systemupdateactivity.SystemUpdateActivity");
                 intent.setClassName("com.android.vending", "com.google.android.finsky.systemupdateactivity.SystemUpdateActivity");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -114,7 +114,7 @@ public class MainFragment extends Fragment {
                 String url = "https://play.google.com/store/apps/details?id=com.google.android.gms";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
         });
 
@@ -123,7 +123,7 @@ public class MainFragment extends Fragment {
             try {
                 Intent intent = new Intent("com.google.android.finsky.activities.MainActivity");
                 intent.setClassName("com.android.vending", "com.google.android.finsky.activities.MainActivity");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();

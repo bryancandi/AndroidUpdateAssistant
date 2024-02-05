@@ -18,6 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bryancandi.android.updateassistant.databinding.ActivityMainBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,11 +76,15 @@ public class MainActivity extends AppCompatActivity {
             recreate();
             return true;
         }
-
         if (id == R.id.action_apps) {
             Intent playStoreLink = new Intent(android.content.Intent.ACTION_VIEW);
             playStoreLink.setData(Uri.parse("https://play.google.com/store/apps/dev?id=7204662745320573588"));
             startActivity(playStoreLink);
+            return true;
+        }
+        if (id == R.id.action_about) {
+            Toast.makeText(getApplicationContext(), getString(R.string.app_version,BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
+                    Toast.LENGTH_SHORT).show();
             return true;
         }
         if (id == R.id.action_exit) {
