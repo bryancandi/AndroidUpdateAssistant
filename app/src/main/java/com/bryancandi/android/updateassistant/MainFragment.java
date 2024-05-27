@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MainFragment extends Fragment {
 
@@ -34,6 +35,7 @@ public class MainFragment extends Fragment {
     CardView gmsUpdatedCard;
     CardView playStoreUpdatedCard;
     TextView version;
+    TextView codename;
     TextView apiLevel;
     TextView buildNumber;
     TextView securityUpdate;
@@ -60,6 +62,12 @@ public class MainFragment extends Fragment {
 
         version = view.findViewById(R.id.versionTV);
         version.setText(getString(R.string.android_version, androidVersion()));
+        codename = view.findViewById(R.id.codenameTV);
+            if (Objects.equals(Build.VERSION.CODENAME, "REL")) {
+                codename.setVisibility(View.GONE);
+            } else {
+                codename.setText(getString(R.string.android_codename, Build.VERSION.CODENAME));
+            }
         apiLevel = view.findViewById(R.id.apiLevelTV);
         apiLevel.setText(getString(R.string.android_api_level, androidAPILevel()));
         buildNumber = view.findViewById(R.id.buildNumberTV);
