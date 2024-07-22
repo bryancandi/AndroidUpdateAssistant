@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.action_apps) {
             Intent playStoreLink = new Intent(android.content.Intent.ACTION_VIEW);
-            playStoreLink.setData(Uri.parse("https://play.google.com/store/apps/dev?id=7204662745320573588"));
+            playStoreLink.setData(Uri.parse("https://play.google.com/store/apps/dev?id=5180384152101978531"));
             startActivity(playStoreLink);
             return true;
         }
