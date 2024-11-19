@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +98,7 @@ public class MainFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("Intent", "Android Security Update activity", e);
                 Toast.makeText(getActivity(), R.string.not_available,
                         Toast.LENGTH_LONG).show();
             }
@@ -111,7 +112,7 @@ public class MainFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("Intent", "Google Play System Update activity", e);
                 Toast.makeText(getActivity(), R.string.not_available,
                         Toast.LENGTH_LONG).show();
             }
@@ -134,7 +135,7 @@ public class MainFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("Intent", "Google Play Store activity", e);
                 Toast.makeText(getActivity(), R.string.not_available,
                         Toast.LENGTH_LONG).show();
             }
@@ -171,7 +172,7 @@ public class MainFragment extends Fragment {
         try {
             newPatchDate = spf.parse(patchDate);
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e("Build", "Security Patch unavailable", e);
         }
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         String newPatchDateString;
@@ -188,9 +189,10 @@ public class MainFragment extends Fragment {
         Date newPatchDate = null;
         try {
             String patchDate = requireActivity().getPackageManager().getPackageInfo("com.google.android.modulemetadata", 0).versionName;
+            assert patchDate != null;
             newPatchDate = spf.parse(patchDate);
         } catch (ParseException | PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("GMS", "Google Play System Update date unavailable", e);
         }
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         String newPatchDateString;
@@ -206,7 +208,7 @@ public class MainFragment extends Fragment {
         try {
             return requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0 ).versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("GMS", "Google Play Services unavailable", e);
         }
         return getString(R.string.not_available);
     }
@@ -217,8 +219,7 @@ public class MainFragment extends Fragment {
             long lastUpdate = requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0 ).lastUpdateTime;
             return dateFormat.format( new Date( lastUpdate ) );
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+            Log.e("GMS", "Google Play Services date unavailable", e);        }
         return getString(R.string.not_available);
     }
 
@@ -226,8 +227,7 @@ public class MainFragment extends Fragment {
         try {
             return requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_STORE_PACKAGE, 0 ).versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+            Log.e("PlayStore", "Google Play Store unavailable", e);        }
         return getString(R.string.not_available);
     }
 
@@ -237,7 +237,7 @@ public class MainFragment extends Fragment {
             long v = requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_STORE_PACKAGE, 0).lastUpdateTime;
             return dateFormat.format( new Date( v ) );
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("PlayStore", "Google Play Store date unavailable", e);
         }
         return getString(R.string.not_available);
     }

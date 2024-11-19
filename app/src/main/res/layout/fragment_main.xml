@@ -6,11 +6,11 @@
     android:theme="@style/Theme.Material3.DynamicColors.DayNight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".MainFragment" >
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,13 +26,13 @@
             android:layout_margin="8dp"
             android:clickable="true"
             android:focusable="auto"
-            style="?attr/materialCardViewFilledStyle">
+            style="?attr/materialCardViewElevatedStyle" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="16dp" >
 
                 <TextView
                     android:id="@+id/versionTV"
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/android_version"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textIsSelectable="true"/>
+                    android:textIsSelectable="true" />
 
                 <TextView
                     android:id="@+id/codenameTV"
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/android_codename"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textIsSelectable="true"/>
+                    android:textIsSelectable="true" />
 
                 <TextView
                     android:id="@+id/apiLevelTV"
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/android_api_level"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textIsSelectable="true"/>
+                    android:textIsSelectable="true" />
 
                 <TextView
                     android:id="@+id/buildNumberTV"
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/android_build_number"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textIsSelectable="true"/>
+                    android:textIsSelectable="true" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -77,13 +77,13 @@
             android:layout_margin="8dp"
             android:clickable="true"
             android:focusable="auto"
-            style="?attr/materialCardViewOutlinedStyle">
+            style="?attr/materialCardViewOutlinedStyle" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="16dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -109,13 +109,13 @@
             android:layout_margin="8dp"
             android:clickable="true"
             android:focusable="auto"
-            style="?attr/materialCardViewOutlinedStyle">
+            style="?attr/materialCardViewOutlinedStyle" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="16dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -141,13 +141,13 @@
             android:layout_margin="8dp"
             android:clickable="true"
             android:focusable="auto"
-            style="?attr/materialCardViewOutlinedStyle">
+            style="?attr/materialCardViewOutlinedStyle" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="16dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -180,13 +180,13 @@
             android:layout_margin="8dp"
             android:clickable="true"
             android:focusable="auto"
-            style="?attr/materialCardViewOutlinedStyle">
+            style="?attr/materialCardViewOutlinedStyle" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="16dp" >
 
                 <TextView
                     android:layout_width="wrap_content"

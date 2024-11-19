@@ -23,7 +23,6 @@ import com.bryancandi.android.updateassistant.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this); // enables edge-to-edge on old android versions
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.bryancandi.android.updateassistant.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
