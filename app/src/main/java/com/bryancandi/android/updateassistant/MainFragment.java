@@ -186,13 +186,21 @@ public class MainFragment extends Fragment {
 
     private String gPlayUpdate() {
         SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        SimpleDateFormat spf1 = new SimpleDateFormat("yyyy-MM", Locale.US);
         Date newPatchDate = null;
         try {
             String patchDate = requireActivity().getPackageManager().getPackageInfo("com.google.android.modulemetadata", 0).versionName;
             assert patchDate != null;
             newPatchDate = spf.parse(patchDate);
         } catch (ParseException | PackageManager.NameNotFoundException e) {
-            Log.e("GMS", "Google Play System Update date unavailable", e);
+            Log.e("GMS", "Google Play System Update date format yyyy-MM-dd unavailable", e);
+        }
+        try {
+            String patchDate = requireActivity().getPackageManager().getPackageInfo("com.google.android.modulemetadata", 0).versionName;
+            assert patchDate != null;
+            newPatchDate = spf1.parse(patchDate);
+        } catch (ParseException | PackageManager.NameNotFoundException e) {
+            Log.e("GMS", "Google Play System Update date format yyyy-MM unavailable", e);
         }
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         String newPatchDateString;
