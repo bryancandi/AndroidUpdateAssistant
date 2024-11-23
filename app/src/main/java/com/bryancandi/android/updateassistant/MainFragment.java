@@ -21,13 +21,9 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.DateTimeParseException;
-import java.time.format.FormatStyle;
-import java.time.temporal.ChronoField;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -170,23 +166,18 @@ public class MainFragment extends Fragment {
     }
 
     private String securityUpdate() {
-        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("yyyy-MM[-dd]") // -dd is optional
-                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)  // Handle missing day of month
-                .toFormatter(Locale.US);
-
-        LocalDate newPatchDate = null;
+        String patchDate = Build.VERSION.SECURITY_PATCH;
+        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        Date newPatchDate = null;
         try {
-            String patchDate = Build.VERSION.SECURITY_PATCH;
-            newPatchDate = LocalDate.parse(patchDate, formatter);
-        } catch (DateTimeParseException e) {
-            Log.e("Build", "Security Patch unavailable", e);
+            newPatchDate = spf.parse(patchDate);
+        } catch (ParseException e) {
+            Log.e("Build", "Security Patch date unavailable", e);
         }
-
         String newPatchDateString;
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         if (newPatchDate != null) {
-            DateTimeFormatter longDateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
-            newPatchDateString = longDateFormatter.format(newPatchDate);
+            newPatchDateString = dateFormat.format(newPatchDate);
             return newPatchDateString;
         } else {
             return Build.VERSION.SECURITY_PATCH;
@@ -194,25 +185,27 @@ public class MainFragment extends Fragment {
     }
 
     private String gPlayUpdate() {
-        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("yyyy-MM[-dd]") // -dd is optional
-                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)  // Handle missing day of month
-                .toFormatter(Locale.US);
-
-        LocalDate newPatchDate = null;
+        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        SimpleDateFormat spf1 = new SimpleDateFormat("yyyy-MM", Locale.US);
+        Date newPatchDate = null;
         try {
             String patchDate = requireActivity().getPackageManager().getPackageInfo("com.google.android.modulemetadata", 0).versionName;
-            newPatchDate = LocalDate.parse(patchDate, formatter);
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("GMS", "Google Play System Update metadata unavailable", e);
-        } catch (DateTimeParseException e) {
-            Log.e("GMS", "Failed to parse Google Play System Update date", e);
+            assert patchDate != null;
+            newPatchDate = spf.parse(patchDate);
+        } catch (ParseException | PackageManager.NameNotFoundException e) {
+            Log.e("GMS", "Google Play System Update date format yyyy-MM-dd unavailable", e);
         }
-
+        try {
+            String patchDate = requireActivity().getPackageManager().getPackageInfo("com.google.android.modulemetadata", 0).versionName;
+            assert patchDate != null;
+            newPatchDate = spf1.parse(patchDate);
+        } catch (ParseException | PackageManager.NameNotFoundException e) {
+            Log.e("GMS", "Google Play System Update date format yyyy-MM unavailable", e);
+        }
         String newPatchDateString;
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         if (newPatchDate != null) {
-            DateTimeFormatter longDateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
-            newPatchDateString = longDateFormatter.format(newPatchDate);
+            newPatchDateString = dateFormat.format(newPatchDate);
             return newPatchDateString;
         } else {
             return getString(R.string.not_available);
