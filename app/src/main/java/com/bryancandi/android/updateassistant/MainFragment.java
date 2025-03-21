@@ -119,17 +119,17 @@ public class MainFragment extends Fragment {
             String marketUrl = "market://details?id=com.google.android.gms";
             String webUrl = "https://play.google.com/store/apps/details?id=com.google.android.gms";
             try {
-                Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketUrl));
-                marketIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(marketIntent);
-            } catch (Exception e) {
-                Log.e("marketIntent", "Market app is not installed", e);
+                Intent gmsMarketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketUrl));
+                gmsMarketIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(gmsMarketIntent);
+            } catch (Exception me) {
+                Log.e("gmsMarketIntent", "Market app is not installed", me);
                 try {
-                    Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
-                    webIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(webIntent);
-                } catch (Exception webE) {
-                    Log.e("webIntent", "Unable to open GMS web link", e);
+                    Intent gmsWebIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
+                    gmsWebIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(gmsWebIntent);
+                } catch (Exception we) {
+                    Log.e("gmsWebIntent", "Unable to open GMS web link", we);
                     Toast.makeText(getActivity(), R.string.not_available,
                             Toast.LENGTH_LONG).show();
                 }

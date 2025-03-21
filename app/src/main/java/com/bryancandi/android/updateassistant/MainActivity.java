@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -76,17 +77,27 @@ public class MainActivity extends AppCompatActivity {
             recreate();
             return true;
         }
+
         if (id == R.id.action_apps) {
-            Intent playStoreLink = new Intent(android.content.Intent.ACTION_VIEW);
-            playStoreLink.setData(Uri.parse("https://play.google.com/store/apps/dev?id=5180384152101978531"));
-            startActivity(playStoreLink);
-            return true;
+            try {
+                Intent playStoreLink = new Intent(android.content.Intent.ACTION_VIEW);
+                playStoreLink.setData(Uri.parse("https://play.google.com/store/apps/dev?id=5180384152101978531"));
+                startActivity(playStoreLink);
+                return true;
+            } catch (Exception e) {
+                Log.e("playStoreLink", "Unable to open Play Store menu web link", e);
+                Toast.makeText(this, R.string.not_available,
+                        Toast.LENGTH_LONG).show();
+                return true;
+            }
         }
+
         if (id == R.id.action_about) {
             Toast.makeText(getApplicationContext(), getString(R.string.app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
                     Toast.LENGTH_SHORT).show();
             return true;
         }
+
         if (id == R.id.action_exit) {
             ActivityCompat.finishAffinity(this);
             return true;
@@ -101,5 +112,4 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 }
