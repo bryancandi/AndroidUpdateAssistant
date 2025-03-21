@@ -52,23 +52,20 @@ public class MainFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-
         binding = FragmentMainBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         version = view.findViewById(R.id.versionTV);
         version.setText(getString(R.string.android_version, androidVersion()));
         codename = view.findViewById(R.id.codenameTV);
-            if (Objects.equals(Build.VERSION.CODENAME, "REL")) {
-                codename.setVisibility(View.GONE);
-            } else {
-                codename.setText(getString(R.string.android_codename, Build.VERSION.CODENAME));
-            }
+        if (Objects.equals(Build.VERSION.CODENAME, "REL")) {
+            codename.setVisibility(View.GONE);
+        } else {
+            codename.setText(getString(R.string.android_codename, Build.VERSION.CODENAME));
+        }
         apiLevel = view.findViewById(R.id.apiLevelTV);
         apiLevel.setText(getString(R.string.android_api_level, androidAPILevel()));
         buildNumber = view.findViewById(R.id.buildNumberTV);
@@ -85,7 +82,6 @@ public class MainFragment extends Fragment {
         playStoreVersion.setText(playStoreVersion());
         playStoreUpdated = view.findViewById(R.id.playStoreUpdateTV);
         playStoreUpdated.setText(playStoreUpdated());
-
         versionCard = view.findViewById(R.id.version_card_view);
         versionCard.setOnClickListener(v -> Toast.makeText(getActivity(), R.string.android_version_toast,
                 Toast.LENGTH_SHORT).show());
@@ -93,12 +89,12 @@ public class MainFragment extends Fragment {
         securityCard = view.findViewById(R.id.security_card_view);
         securityCard.setOnClickListener(v -> {
             try {
-                Intent intent = new Intent("com.google.android.gms.update.SystemUpdateActivity");
-                intent.setClassName("com.google.android.gms", "com.google.android.gms.update.SystemUpdateActivity");
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                Intent systemUpdateIntent = new Intent("com.google.android.gms.update.SystemUpdateActivity");
+                systemUpdateIntent.setClassName("com.google.android.gms", "com.google.android.gms.update.SystemUpdateActivity");
+                systemUpdateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(systemUpdateIntent);
             } catch (Exception e) {
-                Log.e("Intent", "Android Security Update activity", e);
+                Log.e("systemUpdateIntent", "Android Security Update activity", e);
                 Toast.makeText(getActivity(), R.string.not_available,
                         Toast.LENGTH_LONG).show();
             }
@@ -107,12 +103,12 @@ public class MainFragment extends Fragment {
         gPlayUpdateCard = view.findViewById(R.id.google_play_update_card_view);
         gPlayUpdateCard.setOnClickListener(v -> {
             try {
-                Intent intent = new Intent("com.google.android.finsky.systemupdateactivity.SystemUpdateActivity");
-                intent.setClassName("com.android.vending", "com.google.android.finsky.systemupdateactivity.SystemUpdateActivity");
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                Intent gPlaySystemUpdateIntent = new Intent("com.google.android.finsky.systemupdateactivity.SystemUpdateActivity");
+                gPlaySystemUpdateIntent.setClassName("com.android.vending", "com.google.android.finsky.systemupdateactivity.SystemUpdateActivity");
+                gPlaySystemUpdateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(gPlaySystemUpdateIntent);
             } catch (Exception e) {
-                Log.e("Intent", "Google Play System Update activity", e);
+                Log.e("gPlaySystemUpdateIntent", "Google Play System Update activity", e);
                 Toast.makeText(getActivity(), R.string.not_available,
                         Toast.LENGTH_LONG).show();
             }
@@ -120,33 +116,46 @@ public class MainFragment extends Fragment {
 
         gmsUpdatedCard = view.findViewById(R.id.gms_card_view);
         gmsUpdatedCard.setOnClickListener(v -> {
-                String url = "https://play.google.com/store/apps/details?id=com.google.android.gms";
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+            String marketUrl = "market://details?id=com.google.android.gms";
+            String webUrl = "https://play.google.com/store/apps/details?id=com.google.android.gms";
+            try {
+                Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketUrl));
+                marketIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(marketIntent);
+            } catch (Exception e) {
+                Log.e("marketIntent", "Market app is not installed", e);
+                try {
+                    Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
+                    webIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(webIntent);
+                } catch (Exception webE) {
+                    Log.e("webIntent", "Unable to open GMS web link", e);
+                    Toast.makeText(getActivity(), R.string.not_available,
+                            Toast.LENGTH_LONG).show();
+                }
+            }
         });
 
         playStoreUpdatedCard = view.findViewById(R.id.play_store_card_view);
         playStoreUpdatedCard.setOnClickListener(v -> {
             try {
-                Intent intent = new Intent("com.google.android.finsky.activities.MainActivity");
-                intent.setClassName("com.android.vending", "com.google.android.finsky.activities.MainActivity");
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                Intent playStoreIntent = new Intent("com.google.android.finsky.activities.MainActivity");
+                playStoreIntent.setClassName("com.android.vending", "com.google.android.finsky.activities.MainActivity");
+                playStoreIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(playStoreIntent);
             } catch (Exception e) {
-                Log.e("Intent", "Google Play Store activity", e);
+                Log.e("playStoreIntent", "Google Play Store activity", e);
                 Toast.makeText(getActivity(), R.string.not_available,
                         Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     private String androidVersion() {
         return Build.VERSION.RELEASE;
     }
 
+    @NonNull
     private String androidAPILevel() {
         return String.valueOf(Build.VERSION.SDK_INT);
     }
@@ -159,7 +168,8 @@ public class MainFragment extends Fragment {
             build = bis.readLine();
             ifc.destroy();
             bis.close();
-        } catch (java.io.IOException e) {
+        } catch (Exception e) {
+            Log.e("Reader", "Unable to get property: \"ro.build.display.id\"", e);
             buildNumber.setVisibility(View.GONE);
         }
         return build;
@@ -214,7 +224,7 @@ public class MainFragment extends Fragment {
 
     private String gmsVersion() {
         try {
-            return requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0 ).versionName;
+            return requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("GMS", "Google Play Services unavailable", e);
         }
@@ -224,18 +234,20 @@ public class MainFragment extends Fragment {
     private String gmsUpdated() {
         SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy HH:mm z", Locale.US);
         try {
-            long lastUpdate = requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0 ).lastUpdateTime;
-            return formatter.format( new Date( lastUpdate ) );
+            long lastUpdate = requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0).lastUpdateTime;
+            return formatter.format(new Date(lastUpdate));
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e("GMS", "Google Play Services date unavailable", e);        }
+            Log.e("GMS", "Google Play Services date unavailable", e);
+        }
         return getString(R.string.not_available);
     }
 
     private String playStoreVersion() {
         try {
-            return requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_STORE_PACKAGE, 0 ).versionName;
+            return requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_STORE_PACKAGE, 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e("PlayStore", "Google Play Store unavailable", e);        }
+            Log.e("PlayStore", "Google Play Store unavailable", e);
+        }
         return getString(R.string.not_available);
     }
 
@@ -243,7 +255,7 @@ public class MainFragment extends Fragment {
         SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy HH:mm z", Locale.US);
         try {
             long v = requireActivity().getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_STORE_PACKAGE, 0).lastUpdateTime;
-            return formatter.format( new Date( v ) );
+            return formatter.format(new Date(v));
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("PlayStore", "Google Play Store date unavailable", e);
         }
@@ -255,5 +267,4 @@ public class MainFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }

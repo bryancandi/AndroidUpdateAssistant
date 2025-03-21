@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.action_about) {
-            Toast.makeText(getApplicationContext(), getString(R.string.app_version,BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
+            Toast.makeText(getApplicationContext(), getString(R.string.app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
                     Toast.LENGTH_SHORT).show();
             return true;
         }
