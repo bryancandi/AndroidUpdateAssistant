@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        EdgeToEdge.enable(this); // enables edge-to-edge on old android versions
+        EdgeToEdge.enable(this); // enable edge-to-edge
         super.onCreate(savedInstanceState);
 
         com.bryancandi.android.updateassistant.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());

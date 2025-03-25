@@ -6,21 +6,20 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@style/Theme.Material3.DynamicColors.DayNight"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        app:liftOnScroll="false" >
+        app:liftOnScroll="false">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="?android:attr/colorBackground"
             app:titleTextAppearance="?attr/textAppearanceHeadlineMedium"
-            app:titleTextColor="?android:attr/colorPrimary"
-            android:background="?android:attr/colorBackground" />
+            app:titleTextColor="?android:attr/colorPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
