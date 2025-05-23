@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -41,6 +42,21 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+
+        // Retrieve colorPrimary dynamically and set refresh color scheme
+        TypedValue typedValue1 = new TypedValue();
+        getTheme().resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue1, true);
+        int colorPrimary = typedValue1.data;
+
+        swipeRefreshLayout.setColorSchemeColors(colorPrimary);
+
+        // Retrieve colorSurfaceVariant dynamically and set refresh background color scheme
+        TypedValue typedValue2 = new TypedValue();
+        getTheme().resolveAttribute(com.google.android.material.R.attr.colorSurfaceVariant, typedValue2, true);
+        int colorSurfaceVariant = typedValue2.data;
+
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(colorSurfaceVariant);
+
         swipeRefreshLayout.setOnRefreshListener(() -> {
 
             Toast.makeText(getApplicationContext(), getString(R.string.action_refresh_toast),

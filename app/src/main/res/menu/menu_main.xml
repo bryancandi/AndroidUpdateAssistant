@@ -4,11 +4,11 @@
     tools:context="com.bryancandi.android.updateassistant.MainActivity">
     <item
         android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="100"
         android:title="@string/action_refresh"
-        android:icon="@drawable/ic_action_refresh"
-        android:iconTintMode="src_over"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 
     <item
         android:id="@+id/action_apps"

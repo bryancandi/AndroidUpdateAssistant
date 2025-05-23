@@ -10,8 +10,8 @@ android {
         applicationId "com.bryancandi.android.updateassistant"
         minSdk 31
         targetSdk 36
-        versionCode 21
-        versionName "1.2.6"
+        versionCode 22
+        versionName "1.2.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,8 +37,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-    implementation 'androidx.navigation:navigation-fragment:2.8.9'
-    implementation 'androidx.navigation:navigation-ui:2.8.9'
+    implementation 'androidx.navigation:navigation-fragment:2.9.0'
+    implementation 'androidx.navigation:navigation-ui:2.9.0'
     implementation 'com.google.android.gms:play-services-base:18.6.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation "androidx.activity:activity:1.10.1"
