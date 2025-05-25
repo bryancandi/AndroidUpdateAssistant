@@ -6,7 +6,14 @@
     <string name="action_about">About App</string>
     <string name="action_exit">Exit</string>
 
-    <!-- Strings used for fragments for navigation -->
+    <string name="version_popup_title">Android Version</string>
+    <string name="security_popup_title">Android Security Update</string>
+    <string name="google_play_update_popup_title">Google Play System Update</string>
+    <string name="google_play_services_popup_title">Google Play Services</string>
+    <string name="google_play_store_popup_title">Google Play Store</string>
+    <string name="copy_failed_toast">Copy to clipboard failed.</string>
+    <string name="copy">Copy</string>
+
     <string name="main_fragment_label">Android Updates</string>
     <string name="security_card">Android Security Update</string>
     <string name="google_play_update_card">Google Play System Update</string>
@@ -14,7 +21,7 @@
     <string name="google_play_store_card">Google Play Store</string>
     <string name="app_version">App Version: %1$s (%2$d)</string>
     <string name="android_version">Android %1$s</string>
-    <string name="android_version_toast">Android Version</string>
+    <string name="android_version_toast">Press and hold to copy.</string>
     <string name="android_codename">%1$s</string>
     <string name="android_api_level">API Level %1$s</string>
     <string name="android_build_number">Build Number</string>

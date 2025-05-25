@@ -1,14 +1,22 @@
 package com.bryancandi.android.updateassistant;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +26,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bryancandi.android.updateassistant.databinding.FragmentMainBinding;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.material.color.MaterialColors;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -82,11 +91,59 @@ public class MainFragment extends Fragment {
         playStoreVersion.setText(playStoreVersion());
         playStoreUpdated = view.findViewById(R.id.playStoreUpdateTV);
         playStoreUpdated.setText(playStoreUpdated());
+
         versionCard = view.findViewById(R.id.version_card_view);
-        versionCard.setOnClickListener(v -> Toast.makeText(getActivity(), R.string.android_version_toast,
+
+        versionCard.setOnClickListener(v -> Toast.makeText(getContext(), R.string.android_version_toast,
                 Toast.LENGTH_SHORT).show());
 
+        versionCard.setOnLongClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+
+            int colorPrimary;
+            try {
+                colorPrimary = MaterialColors.getColor(v, com.google.android.material.R.attr.colorPrimary);
+            } catch (Exception e) {
+                Log.w("MaterialColors", "Could not get colorPrimary, falling back to default.", e);
+                colorPrimary = 0; // No color fallback
+            }
+
+            SpannableString title = new SpannableString(getString(R.string.version_popup_title));
+            title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
+            if (colorPrimary != 0)
+            {
+                title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
+            }
+
+            popupMenu.getMenu().add(0, 0, 0, title).setEnabled(false);
+
+            popupMenu.getMenuInflater().inflate(R.menu.card_menu, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.action_copy) {
+                    String textToCopy = version.getText().toString() + "\n" +
+                            apiLevel.getText().toString() + "\n" +
+                            buildNumber.getText().toString();
+
+                    ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (clipboard != null) {
+                        ClipData clip = ClipData.newPlainText("copied text", textToCopy);
+                        clipboard.setPrimaryClip(clip);
+                    } else {
+                        Log.e("ClipboardManager", "Clipboard service not available.");
+                        Toast.makeText(getContext(), R.string.copy_failed_toast,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+            return true;
+        });
+
         securityCard = view.findViewById(R.id.security_card_view);
+
         securityCard.setOnClickListener(v -> {
             try {
                 Intent systemUpdateIntent = new Intent("com.google.android.gms.update.SystemUpdateActivity");
@@ -95,12 +152,57 @@ public class MainFragment extends Fragment {
                 startActivity(systemUpdateIntent);
             } catch (Exception e) {
                 Log.e("systemUpdateIntent", "Android Security Update activity", e);
-                Toast.makeText(getActivity(), R.string.not_available,
+                Toast.makeText(getContext(), R.string.not_available,
                         Toast.LENGTH_LONG).show();
             }
         });
 
+        securityCard.setOnLongClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+
+            int colorPrimary;
+            try {
+                colorPrimary = MaterialColors.getColor(v, com.google.android.material.R.attr.colorPrimary);
+            } catch (Exception e) {
+                Log.w("MaterialColors", "Could not get colorPrimary, falling back to default.", e);
+                colorPrimary = 0; // No color fallback
+            }
+
+            SpannableString title = new SpannableString(getString(R.string.security_popup_title));
+            title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
+            if (colorPrimary != 0)
+            {
+                title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
+            }
+
+            popupMenu.getMenu().add(0, 0, 0, title).setEnabled(false);
+
+            popupMenu.getMenuInflater().inflate(R.menu.card_menu, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.action_copy) {
+                    String textToCopy = getString(R.string.security_card) + "\n" +
+                            securityUpdate.getText().toString();
+
+                    ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (clipboard != null) {
+                        ClipData clip = ClipData.newPlainText("copied text", textToCopy);
+                        clipboard.setPrimaryClip(clip);
+                    } else {
+                        Log.e("ClipboardManager", "Clipboard service not available.");
+                        Toast.makeText(getContext(), R.string.copy_failed_toast,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+            return true;
+        });
+
         gPlayUpdateCard = view.findViewById(R.id.google_play_update_card_view);
+
         gPlayUpdateCard.setOnClickListener(v -> {
             try {
                 Intent gPlaySystemUpdateIntent = new Intent("com.google.android.finsky.systemupdateactivity.SystemUpdateActivity");
@@ -109,12 +211,57 @@ public class MainFragment extends Fragment {
                 startActivity(gPlaySystemUpdateIntent);
             } catch (Exception e) {
                 Log.e("gPlaySystemUpdateIntent", "Google Play System Update activity", e);
-                Toast.makeText(getActivity(), R.string.not_available,
+                Toast.makeText(getContext(), R.string.not_available,
                         Toast.LENGTH_LONG).show();
             }
         });
 
+        gPlayUpdateCard.setOnLongClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+
+            int colorPrimary;
+            try {
+                colorPrimary = MaterialColors.getColor(v, com.google.android.material.R.attr.colorPrimary);
+            } catch (Exception e) {
+                Log.w("MaterialColors", "Could not get colorPrimary, falling back to default.", e);
+                colorPrimary = 0; // No color fallback
+            }
+
+            SpannableString title = new SpannableString(getString(R.string.google_play_update_popup_title));
+            title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
+            if (colorPrimary != 0)
+            {
+                title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
+            }
+
+            popupMenu.getMenu().add(0, 0, 0, title).setEnabled(false);
+
+            popupMenu.getMenuInflater().inflate(R.menu.card_menu, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.action_copy) {
+                    String textToCopy = getString(R.string.google_play_update_card) + "\n" +
+                            gPlayUpdate.getText().toString();
+
+                    ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (clipboard != null) {
+                        ClipData clip = ClipData.newPlainText("copied text", textToCopy);
+                        clipboard.setPrimaryClip(clip);
+                    } else {
+                        Log.e("ClipboardManager", "Clipboard service not available.");
+                        Toast.makeText(getContext(), R.string.copy_failed_toast,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+            return true;
+        });
+
         gmsUpdatedCard = view.findViewById(R.id.gms_card_view);
+
         gmsUpdatedCard.setOnClickListener(v -> {
             String marketUrl = "market://details?id=com.google.android.gms";
             String webUrl = "https://play.google.com/store/apps/details?id=com.google.android.gms";
@@ -130,13 +277,59 @@ public class MainFragment extends Fragment {
                     startActivity(gmsWebIntent);
                 } catch (Exception we) {
                     Log.e("gmsWebIntent", "Unable to open GMS web link", we);
-                    Toast.makeText(getActivity(), R.string.not_available,
+                    Toast.makeText(getContext(), R.string.not_available,
                             Toast.LENGTH_LONG).show();
                 }
             }
         });
 
+        gmsUpdatedCard.setOnLongClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+
+            int colorPrimary;
+            try {
+                colorPrimary = MaterialColors.getColor(v, com.google.android.material.R.attr.colorPrimary);
+            } catch (Exception e) {
+                Log.w("MaterialColors", "Could not get colorPrimary, falling back to default.", e);
+                colorPrimary = 0; // No color fallback
+            }
+
+            SpannableString title = new SpannableString(getString(R.string.google_play_services_popup_title));
+            title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
+            if (colorPrimary != 0)
+            {
+                title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
+            }
+
+            popupMenu.getMenu().add(0, 0, 0, title).setEnabled(false);
+
+            popupMenu.getMenuInflater().inflate(R.menu.card_menu, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.action_copy) {
+                    String textToCopy = getString(R.string.google_play_services_card) + "\n" +
+                            gmsVersion.getText().toString() + "\n" +
+                            gmsUpdated.getText().toString();
+
+                    ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (clipboard != null) {
+                        ClipData clip = ClipData.newPlainText("copied text", textToCopy);
+                        clipboard.setPrimaryClip(clip);
+                    } else {
+                        Log.e("ClipboardManager", "Clipboard service not available.");
+                        Toast.makeText(getContext(), R.string.copy_failed_toast,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+            return true;
+        });
+
         playStoreUpdatedCard = view.findViewById(R.id.play_store_card_view);
+
         playStoreUpdatedCard.setOnClickListener(v -> {
             try {
                 Intent playStoreIntent = new Intent("com.google.android.finsky.activities.MainActivity");
@@ -145,9 +338,54 @@ public class MainFragment extends Fragment {
                 startActivity(playStoreIntent);
             } catch (Exception e) {
                 Log.e("playStoreIntent", "Google Play Store activity", e);
-                Toast.makeText(getActivity(), R.string.not_available,
+                Toast.makeText(getContext(), R.string.not_available,
                         Toast.LENGTH_LONG).show();
             }
+        });
+
+        playStoreUpdatedCard.setOnLongClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+
+            int colorPrimary;
+            try {
+                colorPrimary = MaterialColors.getColor(v, com.google.android.material.R.attr.colorPrimary);
+            } catch (Exception e) {
+                Log.w("MaterialColors", "Could not get colorPrimary, falling back to default.", e);
+                colorPrimary = 0; // No color fallback
+            }
+
+            SpannableString title = new SpannableString(getString(R.string.google_play_store_popup_title));
+            title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
+            if (colorPrimary != 0)
+            {
+                title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
+            }
+
+            popupMenu.getMenu().add(0, 0, 0, title).setEnabled(false);
+
+            popupMenu.getMenuInflater().inflate(R.menu.card_menu, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.action_copy) {
+                    String textToCopy = getString(R.string.google_play_store_card) + "\n" +
+                            playStoreVersion.getText().toString() + "\n" +
+                            playStoreUpdated.getText().toString();
+
+                    ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (clipboard != null) {
+                        ClipData clip = ClipData.newPlainText("copied text", textToCopy);
+                        clipboard.setPrimaryClip(clip);
+                    } else {
+                        Log.e("ClipboardManager", "Clipboard service not available.");
+                        Toast.makeText(getContext(), R.string.copy_failed_toast,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+            return true;
         });
     }
 

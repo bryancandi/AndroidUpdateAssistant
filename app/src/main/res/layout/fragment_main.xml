@@ -38,32 +38,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/android_version"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textIsSelectable="true" />
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
 
                     <TextView
                         android:id="@+id/codenameTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/android_codename"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textIsSelectable="true" />
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <TextView
                         android:id="@+id/apiLevelTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/android_api_level"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textIsSelectable="true" />
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <TextView
                         android:id="@+id/buildNumberTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/android_build_number"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textIsSelectable="true" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
