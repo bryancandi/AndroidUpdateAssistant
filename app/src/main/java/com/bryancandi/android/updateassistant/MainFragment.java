@@ -110,8 +110,7 @@ public class MainFragment extends Fragment {
 
             SpannableString title = new SpannableString(getString(R.string.version_popup_title));
             title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
-            if (colorPrimary != 0)
-            {
+            if (colorPrimary != 0) {
                 title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
             }
 
@@ -170,8 +169,7 @@ public class MainFragment extends Fragment {
 
             SpannableString title = new SpannableString(getString(R.string.security_popup_title));
             title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
-            if (colorPrimary != 0)
-            {
+            if (colorPrimary != 0) {
                 title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
             }
 
@@ -229,8 +227,7 @@ public class MainFragment extends Fragment {
 
             SpannableString title = new SpannableString(getString(R.string.google_play_update_popup_title));
             title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
-            if (colorPrimary != 0)
-            {
+            if (colorPrimary != 0) {
                 title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
             }
 
@@ -296,8 +293,7 @@ public class MainFragment extends Fragment {
 
             SpannableString title = new SpannableString(getString(R.string.google_play_services_popup_title));
             title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
-            if (colorPrimary != 0)
-            {
+            if (colorPrimary != 0) {
                 title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
             }
 
@@ -356,8 +352,7 @@ public class MainFragment extends Fragment {
 
             SpannableString title = new SpannableString(getString(R.string.google_play_store_popup_title));
             title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), 0);
-            if (colorPrimary != 0)
-            {
+            if (colorPrimary != 0) {
                 title.setSpan(new ForegroundColorSpan(colorPrimary), 0, title.length(), 0);
             }
 
